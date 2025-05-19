@@ -1,0 +1,1 @@
+echo -e "$(cat utils/boards_apparence.txt)"
