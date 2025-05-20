@@ -12,7 +12,7 @@ private:
 public:
     /* Contructors */
     Frame();
-    Frame(int val);
+    Frame(int val, int user_val = 0, bool displayed = false);
 
     /* Getters */
     int getValue();
@@ -20,11 +20,11 @@ public:
     bool isDisplayed();
 
     /* Setters */
-    void setValue(int tval);
+    Frame &setValue(int val);
+    Frame &setUserValue(int val);
+    Frame &display(bool val);
 
     /* Methods */
     void generate(std::vector<int> forbiden_values);
-
-    /* Operators */
-    bool operator==(const Frame &other);
+    bool checkUserValue();
 };

@@ -4,7 +4,7 @@
 #include <vector>
 #include <iostream>
 
-#include "Chunk.h"
+#include "Chunk.hpp"
 
 class Board
 {

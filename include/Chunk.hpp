@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Frame.h"
+#include "Frame.hpp"
 
 class Chunk
 {
@@ -10,9 +10,9 @@ private:
 public:
     /* Contructors */
     Chunk();
+    Chunk(Frame frames[3][3]);
 
     /* Getters */
-    Frame **getFrames();
     Frame &getFrame(int cx, int cy);
 
     /* Setters */
