@@ -1,6 +1,5 @@
 #include "Frame.hpp"
 
-
 /* Contructors */
 Frame::Frame()
 : value(0), user_value(0), is_displayed(false) 
@@ -42,12 +41,7 @@ Frame &Frame::display(bool val)
 }
 
 /* Methods */
-void Frame::generate(std::vector<int> forbiden_values)
-{
-
-}
-
 bool Frame::checkUserValue()
 {
-    return this->value = this->user_value;
+    return this->value == this->user_value;
 }

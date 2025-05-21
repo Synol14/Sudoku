@@ -4,12 +4,15 @@
 #include <vector>
 #include <iostream>
 
-#include "Chunk.hpp"
+#include "Frame.hpp"
 
+#define BOARD_SIZE 9
 class Board
 {
 private:
-    Chunk chunks[3][3];
+    Frame frames[BOARD_SIZE][BOARD_SIZE];
+    std::vector<Frame *> forbidden_lines[BOARD_SIZE];
+    std::vector<Frame *> forbidden_columns[BOARD_SIZE];
 
 public:
     /* Contructors */
@@ -21,7 +24,7 @@ public:
      *
      * @param x (IN) The x coordinate of the frame
      * @param y (IN) The y coordinate of the frame
-     * @return Frame
+     * @return Frame *
      */
     Frame getFrame(int x, int y);
     /**
