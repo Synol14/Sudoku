@@ -1,3 +1,5 @@
+#include <set>
+
 #include "Chunk.hpp"
 
 /* Contructors */
@@ -28,4 +30,5 @@ void Chunk::setFrame(Frame f, int cx, int cy)
 /* Methods */
 void Chunk::generate()
 {
+    std::set<int> available_numbers_in_chunk = {1, 2, 3, 4, 5, 6, 7, 8, 9};
 }
