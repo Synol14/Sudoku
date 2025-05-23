@@ -6,13 +6,24 @@
 
 #include "Frame.hpp"
 
-#define BOARD_SIZE 9
+#define CHUNK_SIZE 3
+#define BOARD_SIZE CHUNK_SIZE*CHUNK_SIZE
 class Board
 {
 private:
-    Frame frames[BOARD_SIZE][BOARD_SIZE];
-    std::vector<Frame *> forbidden_lines[BOARD_SIZE];
-    std::vector<Frame *> forbidden_columns[BOARD_SIZE];
+    Frame *frames[BOARD_SIZE][BOARD_SIZE];
+    std::vector<int> forbidden_lines[BOARD_SIZE];
+    std::vector<int> forbidden_columns[BOARD_SIZE];
+
+private:
+    bool canPlaceNumberInChunk(int x, int y, int a);
+    bool canPlaceNumberInLine(int x, int a);
+    bool canPlaceNumberInColumn(int y, int a);
+    std::set<int> getAvaillableNumbersInChunk(int x, int y);
+    std::set<int> getAvaillableNumbersInLine(int x);
+    std::set<int> getAvaillableNumbersInColumn(int y);
+    std::set<int> getAvaillableNumbersInFrame(int x, int y);
+    void getPreviousCoordinates(int &x, int &y);
 
 public:
     /* Contructors */
@@ -26,7 +37,7 @@ public:
      * @param y (IN) The y coordinate of the frame
      * @return Frame *
      */
-    Frame getFrame(int x, int y);
+    Frame *getFrame(int x, int y);
     /**
      * @brief Get the value by coordinates
      *
@@ -35,6 +46,7 @@ public:
      * @return int
      */
     int getValue(int x, int y);
+    std::string toString();
 
     /* Setters */
 
@@ -43,7 +55,5 @@ public:
      * @brief Generate the board
      */
     void generate();
-    
-    /* Static Methods */
-    static Board createEmptyBoard();
+    void clear();
 };
