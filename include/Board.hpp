@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <vector>
+#include <set>
 #include <iostream>
 
 #include "Frame.hpp"
@@ -11,14 +12,11 @@
 class Board
 {
 private:
-    Frame *frames[BOARD_SIZE][BOARD_SIZE];
+    Frame frames[BOARD_SIZE][BOARD_SIZE];
     std::vector<int> forbidden_lines[BOARD_SIZE];
     std::vector<int> forbidden_columns[BOARD_SIZE];
 
 private:
-    bool canPlaceNumberInChunk(int x, int y, int a);
-    bool canPlaceNumberInLine(int x, int a);
-    bool canPlaceNumberInColumn(int y, int a);
     std::set<int> getAvaillableNumbersInChunk(int x, int y);
     std::set<int> getAvaillableNumbersInLine(int x);
     std::set<int> getAvaillableNumbersInColumn(int y);
@@ -35,9 +33,9 @@ public:
      *
      * @param x (IN) The x coordinate of the frame
      * @param y (IN) The y coordinate of the frame
-     * @return Frame *
+     * @return Frame
      */
-    Frame *getFrame(int x, int y);
+    Frame getFrame(int x, int y);
     /**
      * @brief Get the value by coordinates
      *

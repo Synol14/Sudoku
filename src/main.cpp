@@ -1,7 +1,11 @@
 #include <iostream>
 
+#include "Board.hpp"
+
 int main(int argc, char const *argv[])
 {
-    std::cout << "Hello, World!" << std::endl;
+    Board b;
+    b.generate();
+    std::cout << b.toString() << std::endl;
     return 0;
 }
