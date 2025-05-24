@@ -21,7 +21,7 @@ int Board::getValue(int x, int y)
 /* Setters */
 
 /* Methods */
-std::set<int> Board::getAvaillableNumbersInChunk(int x, int y)
+std::set<int> Board::getavailableNumbersInChunk(int x, int y)
 {
     int chunk_x = x / CHUNK_SIZE;
     int chunk_y = y / CHUNK_SIZE;
@@ -39,7 +39,7 @@ std::set<int> Board::getAvaillableNumbersInChunk(int x, int y)
     }
     return available_numbers;
 }
-std::set<int> Board::getAvaillableNumbersInLine(int x)
+std::set<int> Board::getavailableNumbersInLine(int x)
 {
     std::set<int> available_numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9};
     for (const auto& i : this->forbidden_columns[x])
@@ -48,7 +48,7 @@ std::set<int> Board::getAvaillableNumbersInLine(int x)
     }
     return available_numbers;
 }
-std::set<int> Board::getAvaillableNumbersInColumn(int y)
+std::set<int> Board::getavailableNumbersInColumn(int y)
 {
     std::set<int> available_numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9};
     for (const auto& i : this->forbidden_lines[y])
@@ -57,9 +57,9 @@ std::set<int> Board::getAvaillableNumbersInColumn(int y)
     }
     return available_numbers;
 }
-std::set<int> Board::getAvaillableNumbersInFrame(int x, int y)
+std::set<int> Board::getavailableNumbersInFrame(int x, int y)
 {
-    std::set<int> available_numbers = getAvaillableNumbersInChunk(x, y);
+    std::set<int> available_numbers = getavailableNumbersInChunk(x, y);
     for (const auto& i : this->forbidden_columns[x])
     {
         available_numbers.erase(i);
@@ -134,17 +134,16 @@ std::string Board::toString()
     return output;
 }
 
-void Board::generate()
+int Board::generate()
 {
+    int iteration_count = 0;
+
+    /* Clear board if already generated */
     this->clear();
-    /*
-        #TODO:
-        il faut stocker les previous values de toutes les cases modifiées 
-            jusqu'à qu'elle soit "dépasser" (que la case d'avant soit modifiée)
-        
-        --> HashMap (Coordinates, prev_values)
-    */
+
+    /* --> HashMap (Coordinates, prev_values) */
     std::map<std::pair<int, int>, std::vector<int>> tested_values;
+    /* tested_values map initialization */
     for (int x = 0; x < BOARD_SIZE; x++)
     {
         for (int y = 0; y < BOARD_SIZE; y++)
@@ -153,13 +152,16 @@ void Board::generate()
         }
     }
 
+    /* Board generation */
     for (int y = 0; y < BOARD_SIZE; y++)
     {
         for (int x = 0; x < BOARD_SIZE; x++)
         {
-            auto available_numbers = this->getAvaillableNumbersInFrame(x, y);
-            /* --> Get previous_values from HashMap at key = x,y */
+            // Get available numbers for this frame at this coordinates
+            auto available_numbers = this->getavailableNumbersInFrame(x, y);
+            // Get previous_values from HashMap at key = x,y
             auto previous_values = tested_values.at(std::make_pair(x, y));
+            // If not empty then remove them from available_numbers
             if (!previous_values.empty()) 
             {
                 for (auto &&pval : previous_values)
@@ -167,36 +169,50 @@ void Board::generate()
                     available_numbers.erase(pval);
                 }
             }
+            /* No solution available */
             if (available_numbers.empty())
             {
-                /* --> Clear data in HashMap at key = x,y */
+                // Clear data in HashMap at key = x,y
                 tested_values.at(std::make_pair(x, y)).clear();
-
+                // Decrement coordinates
                 getPreviousCoordinates(x, y);
+                // Remove number of the previous frame from forbidden lists
                 this->forbidden_columns[x].pop_back();
                 this->forbidden_lines[y].pop_back();
-                
-                /* --> Push_back new value in HashMap at key = x,y */
+                // Push_back new value in HashMap at key = x,y
                 tested_values.at(std::make_pair(x, y)).push_back(this->frames[x][y].getValue());
-
+                // Reset previous frame value
                 this->frames[x][y].setValue(0);
                 x--; // To prevent loop incrementation
             }
+            /* Number placement */
             else
             {
+                /* Random selection of a number from available_numbers */
                 int index = getRandomNumber(available_numbers.size()-1);
                 auto it = available_numbers.begin();
                 std::advance(it, index);
                 
+                // Set current frame value
                 this->frames[x][y].setValue(*it);
+                // Add frame value to forbidden lists
                 this->forbidden_columns[x].push_back(*it);
                 this->forbidden_lines[y].push_back(*it);
             }
+
+            /* Add an iteration to counter */
+            iteration_count++;
+
+#ifdef BOARD_DEBUG
+            /* To display progress */
             system("clear");
             std::cout << this->toString() << std::endl;
             sleep(10);
+#endif
         }
     }
+
+    return iteration_count;
 }
 
 
@@ -211,4 +227,10 @@ void Board::clear()
             this->frames[x][y].display(false);
         }
     }
+    for (int i = 0; i < BOARD_SIZE; i++)
+    {
+        this->forbidden_lines[i].clear();
+        this->forbidden_columns[i].clear();
+    }
+    
 }

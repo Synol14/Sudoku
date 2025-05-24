@@ -9,6 +9,9 @@
 
 #define CHUNK_SIZE 3
 #define BOARD_SIZE CHUNK_SIZE*CHUNK_SIZE
+
+// #define BOARD_DEBUG
+
 class Board
 {
 private:
@@ -17,10 +20,10 @@ private:
     std::vector<int> forbidden_columns[BOARD_SIZE];
 
 private:
-    std::set<int> getAvaillableNumbersInChunk(int x, int y);
-    std::set<int> getAvaillableNumbersInLine(int x);
-    std::set<int> getAvaillableNumbersInColumn(int y);
-    std::set<int> getAvaillableNumbersInFrame(int x, int y);
+    std::set<int> getavailableNumbersInChunk(int x, int y);
+    std::set<int> getavailableNumbersInLine(int x);
+    std::set<int> getavailableNumbersInColumn(int y);
+    std::set<int> getavailableNumbersInFrame(int x, int y);
     void getPreviousCoordinates(int &x, int &y);
 
 public:
@@ -50,8 +53,13 @@ public:
 
     /* Methods */
     /**
-     * @brief Generate the board
+     * @brief Generate a board
+     * 
+     * @return int Iterations count
      */
-    void generate();
+    int generate();
+    /**
+     * @brief Clear and reset board
+     */
     void clear();
 };
