@@ -2,14 +2,29 @@
 
 #include <algorithm>
 #include <vector>
+#include <set>
 #include <iostream>
 
-#include "Chunk.hpp"
+#include "Frame.hpp"
+
+#define CHUNK_SIZE 3
+#define BOARD_SIZE CHUNK_SIZE*CHUNK_SIZE
+
+// #define BOARD_DEBUG
 
 class Board
 {
 private:
-    Chunk chunks[3][3];
+    Frame frames[BOARD_SIZE][BOARD_SIZE];
+    std::vector<int> forbidden_lines[BOARD_SIZE];
+    std::vector<int> forbidden_columns[BOARD_SIZE];
+
+private:
+    std::set<int> getavailableNumbersInChunk(int x, int y);
+    std::set<int> getavailableNumbersInLine(int x);
+    std::set<int> getavailableNumbersInColumn(int y);
+    std::set<int> getavailableNumbersInFrame(int x, int y);
+    void getPreviousCoordinates(int &x, int &y);
 
 public:
     /* Contructors */
@@ -32,15 +47,19 @@ public:
      * @return int
      */
     int getValue(int x, int y);
+    std::string toString();
 
     /* Setters */
 
     /* Methods */
     /**
-     * @brief Generate the board
+     * @brief Generate a board
+     * 
+     * @return int Iterations count
      */
-    void generate();
-    
-    /* Static Methods */
-    static Board createEmptyBoard();
+    int generate();
+    /**
+     * @brief Clear and reset board
+     */
+    void clear();
 };

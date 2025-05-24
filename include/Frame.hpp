@@ -25,6 +25,5 @@ public:
     Frame &display(bool val);
 
     /* Methods */
-    void generate(std::vector<int> forbiden_values);
     bool checkUserValue();
 };

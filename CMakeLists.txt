@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 
 # Define settings for the project
-set(PROJECT_NAME TD)        # Change this to your project name
+set(PROJECT_NAME Sudoku)    # Change this to your project name
 set(PROJECT_VERSION 1.0)    # Change this to the version of your project
 set(EXECUTABLE_EXTENTION )  # Change this to the extension of the executable file (e.g. .exe for Windows)
 set(INCLUDE_DIR include)    # Change this to the directory where your header files are located
@@ -64,11 +64,17 @@ FetchContent_MakeAvailable(googletest)
 # Collect all test source files
 file(GLOB_RECURSE TEST_FILES ${TEST_DIR}/*.cpp)
 
-# Add a test executable for each test file
+# Add a library for the main project
+add_library(${PROJECT_NAME}_lib ${SOURCE_FILES} ${HEADER_FILES})
+
+# Add the include directories for the library
+target_include_directories(${PROJECT_NAME}_lib PUBLIC ${INCLUDE_DIR})
+
+# Link the test executables to the main project library
 foreach(TEST_FILE ${TEST_FILES})
   get_filename_component(TEST_NAME ${TEST_FILE} NAME_WE)
   add_executable(test_${TEST_NAME} ${TEST_FILE})
-  target_link_libraries(test_${TEST_NAME} gtest_main)
+  target_link_libraries(test_${TEST_NAME} gtest_main ${PROJECT_NAME}_lib)
   target_include_directories(test_${TEST_NAME} PUBLIC ${INCLUDE_DIR})
   target_compile_options(test_${TEST_NAME} PRIVATE
     $<$<CONFIG:Debug>:-g ${DEBUG_COMPILE_OPTIONS}>
