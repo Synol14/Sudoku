@@ -6,7 +6,7 @@
 
 #define SAMPLE_NUMBER 100
 
-int main(int argc, char const *argv[])
+int main()
 {
     newRandomSeed();
     Board b;
@@ -17,11 +17,14 @@ int main(int argc, char const *argv[])
     for (int i = 0; i < SAMPLE_NUMBER; i++)
     {
         auto start = std::chrono::high_resolution_clock::now();
-        int it_count = b.generate();
+        int it_count = b.generateFull();
         auto end = std::chrono::high_resolution_clock::now();
         total_iteration += it_count;
         total_duration += end - start;
     }
+
+    b.generatePlayableBoard(30);
+    std::cout << b.toString() << std::endl;
 
     std::cout << "Sample count:     " << SAMPLE_NUMBER << std::endl;
     std::cout << "Total iterations: " << total_iteration << std::endl;

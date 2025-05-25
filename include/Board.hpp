@@ -53,11 +53,17 @@ public:
 
     /* Methods */
     /**
-     * @brief Generate a board
+     * @brief Generate the full board
      * 
      * @return int Iterations count
      */
-    int generate();
+    int generateFull();
+    /**
+     * @brief Generate a board from a full board by removing some frames
+     * 
+     * @param level (IN) Board level corresponding to number of frames will be removing 
+     */
+    void generatePlayableBoard(int level);
     /**
      * @brief Clear and reset board
      */
