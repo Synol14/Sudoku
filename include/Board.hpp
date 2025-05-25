@@ -11,6 +11,7 @@
 #define BOARD_SIZE CHUNK_SIZE*CHUNK_SIZE
 
 // #define BOARD_DEBUG
+// #define BOARD_SOLVER_DEBUG
 
 class Board
 {
@@ -21,8 +22,6 @@ private:
 
 private:
     std::set<int> getavailableNumbersInChunk(int x, int y);
-    std::set<int> getavailableNumbersInLine(int x);
-    std::set<int> getavailableNumbersInColumn(int y);
     std::set<int> getavailableNumbersInFrame(int x, int y);
     void getPreviousCoordinates(int &x, int &y);
 
@@ -47,6 +46,11 @@ public:
      * @return int
      */
     int getValue(int x, int y);
+    /**
+     * @brief Get a board visual in a string
+     * 
+     * @return std::string 
+     */
     std::string toString();
 
     /* Setters */
@@ -68,4 +72,10 @@ public:
      * @brief Clear and reset board
      */
     void clear();
+    /**
+     * @brief Solve a playable board
+     * 
+     * @return int Iterations count
+     */
+    int solve();
 };
