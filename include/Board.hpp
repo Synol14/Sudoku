@@ -37,7 +37,7 @@ public:
      * @param y (IN) The y coordinate of the frame
      * @return Frame
      */
-    Frame getFrame(int x, int y);
+    Frame getFrame(int x, int y) const;
     /**
      * @brief Get the value by coordinates
      *
@@ -45,7 +45,7 @@ public:
      * @param y (IN) The y coordinate of the frame
      * @return int
      */
-    int getValue(int x, int y);
+    int getValue(int x, int y) const;
     /**
      * @brief Get a board visual in a string
      * 

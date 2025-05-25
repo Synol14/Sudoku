@@ -10,15 +10,15 @@ Frame::Frame(int val, int user_val, bool fixed)
 {}
 
 /* Getters */
-int Frame::getValue()
+int Frame::getValue() const
 {
     return this->value;
 }
-int Frame::getUserValue()
+int Frame::getUserValue() const
 {
     return this->user_value;
 }
-bool Frame::isFixed()
+bool Frame::isFixed() const
 {
     return this->is_fixed;
 }

@@ -15,9 +15,9 @@ public:
     Frame(int val, int user_val = 0, bool displayed = false);
 
     /* Getters */
-    int getValue();
-    int getUserValue();
-    bool isFixed();
+    int getValue() const;
+    int getUserValue() const;
+    bool isFixed() const;
 
     /* Setters */
     Frame &setValue(int val);

@@ -10,11 +10,11 @@
 Board::Board() {}
 
 /* Getters */
-Frame Board::getFrame(int x, int y)
+Frame Board::getFrame(int x, int y) const
 {
     return this->frames[y][x];
 }
-int Board::getValue(int x, int y)
+int Board::getValue(int x, int y) const
 {
     return this->frames[y][x].getValue();
 }
@@ -210,6 +210,24 @@ void Board::generatePlayableBoard(int level)
         level = 0;
     if (level > BOARD_SIZE * BOARD_SIZE)
         level = BOARD_SIZE * BOARD_SIZE;
+
+    /* Reset last playable board */
+    for (int i = 0; i < BOARD_SIZE; i++)
+    {
+        this->forbidden_columns[i].clear();
+        this->forbidden_lines[i].clear();
+    }
+    for (int x = 0; x < BOARD_SIZE; x++)
+    {
+        for (int y = 0; y < BOARD_SIZE; y++)
+        {
+            this->frames[x][y].fixed(true);
+            this->frames[x][y].setUserValue(0);
+            this->forbidden_columns[x].push_back(this->frames[x][y].getValue());
+            this->forbidden_lines[y].push_back(this->frames[x][y].getValue());
+        }
+    }
+
     /* Hide frames */
     std::set<std::pair<int, int>> hiden;
     for (int i = 0; i < level; i++)
