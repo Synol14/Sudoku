@@ -3,9 +3,10 @@
 
 #include "Board.hpp"
 #include "Utils.h"
+#include "AI_Utils.hpp"
 
-#define SAMPLE_NUMBER       1000000
-#define DIFICULTY_LEVEL     30
+#define SAMPLE_NUMBER 1000
+#define DIFFICULTY_LEVEL 30
 
 int main()
 {
@@ -27,7 +28,7 @@ int main()
         total_iteration += it_count;
         total_duration += end - start;
 
-        b.generatePlayableBoard(DIFICULTY_LEVEL);
+        b.generatePlayableBoard(DIFFICULTY_LEVEL);
 
         start = std::chrono::high_resolution_clock::now();
         it_count = b.solve();
@@ -35,22 +36,24 @@ int main()
         total_solver_iteration += it_count;
         total_solver_duration += end - start;
 
-        std::cout << "done."<< std::endl;
+        saveBoardInfiles(i, b);
+
+        std::cout << "done." << std::endl;
     }
 
     system("clear");
     std::cout << "Sample count:     " << SAMPLE_NUMBER << std::endl;
-    std::cout << "Dificulty level:  " << DIFICULTY_LEVEL << std::endl;
+    std::cout << "Dificulty level:  " << DIFFICULTY_LEVEL << std::endl;
     std::cout << "============= Generator =============" << std::endl;
     std::cout << "Total iterations: " << total_iteration << std::endl;
     std::cout << "Total duration:   " << total_duration.count() << "ms" << std::endl;
-    std::cout << "Mean iterations:  " << total_iteration/SAMPLE_NUMBER << std::endl;
-    std::cout << "Mean duration:    " << total_duration.count()/SAMPLE_NUMBER << "ms" << std::endl;
+    std::cout << "Mean iterations:  " << total_iteration / SAMPLE_NUMBER << std::endl;
+    std::cout << "Mean duration:    " << total_duration.count() / SAMPLE_NUMBER << "ms" << std::endl;
     std::cout << "=============== Solver ==============" << std::endl;
     std::cout << "Total iterations: " << total_solver_iteration << std::endl;
     std::cout << "Total duration:   " << total_solver_duration.count() << "ms" << std::endl;
-    std::cout << "Mean iterations:  " << total_solver_iteration/SAMPLE_NUMBER << std::endl;
-    std::cout << "Mean duration:    " << total_solver_duration.count()/SAMPLE_NUMBER << "ms" << std::endl;
+    std::cout << "Mean iterations:  " << total_solver_iteration / SAMPLE_NUMBER << std::endl;
+    std::cout << "Mean duration:    " << total_solver_duration.count() / SAMPLE_NUMBER << "ms" << std::endl;
 
     return 0;
 }
