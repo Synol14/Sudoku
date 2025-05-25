@@ -22,7 +22,6 @@ private:
 
 private:
     std::set<int> getavailableNumbersInChunk(int x, int y);
-    std::set<int> getavailableNumbersInChunkUser(int x, int y);
     std::set<int> getavailableNumbersInFrame(int x, int y);
     void getPreviousCoordinates(int &x, int &y);
 
