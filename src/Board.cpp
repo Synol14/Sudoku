@@ -4,6 +4,7 @@
 
 #include "Board.hpp"
 #include "Utils.h"
+#include "ANSI.h"
 
 /* Constructors */
 Board::Board() {}
@@ -100,10 +101,14 @@ std::string Board::toString()
                 output += "│";
             }
             output += " ";
-            int val = this->frames[x][y].getValue();
-            if (val != 0)
+            auto f = this->frames[x][y];
+            if (f.getValue() != 0 && f.isFixed())
             {
-                output += std::to_string(this->frames[x][y].getValue());
+                output += ANSI_BOLD + std::to_string(f.getValue()) + ANSI_RESET;
+            }
+            else if (f.getUserValue() != 0 && !f.isFixed())
+            {
+                output += ANSI_ORANGE + std::to_string(f.getValue()) + ANSI_RESET;
             }
             else
             {
@@ -134,7 +139,7 @@ std::string Board::toString()
     return output;
 }
 
-int Board::generate()
+int Board::generateFull()
 {
     int iteration_count = 0;
 
@@ -216,6 +221,27 @@ int Board::generate()
 }
 
 
+void Board::generatePlayableBoard(int level)
+{
+    /* Verifications */
+    if (level < 0) level = 0;
+    if (level > BOARD_SIZE*BOARD_SIZE) level = BOARD_SIZE*BOARD_SIZE;
+    /* Hide frames */
+    std::set<std::pair<int, int>> hiden;
+    for (int i = 0; i < level; i++)
+    {
+        std::pair<int, int> coordinates;
+        do
+        {
+            coordinates.first = getRandomNumber(BOARD_SIZE-1);
+            coordinates.second = getRandomNumber(BOARD_SIZE-1);
+        } while (hiden.find(coordinates) != hiden.end());
+        this->frames[coordinates.first][coordinates.second].fixed(false);
+        hiden.emplace(coordinates);
+    }
+}
+
+
 void Board::clear()
 {
     for (int x = 0; x < BOARD_SIZE; x++)
@@ -224,7 +250,7 @@ void Board::clear()
         {
             this->frames[x][y].setValue(0);
             this->frames[x][y].setUserValue(0);
-            this->frames[x][y].display(false);
+            this->frames[x][y].fixed(true);
         }
     }
     for (int i = 0; i < BOARD_SIZE; i++)

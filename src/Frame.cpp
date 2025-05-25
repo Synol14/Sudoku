@@ -2,11 +2,11 @@
 
 /* Contructors */
 Frame::Frame()
-: value(0), user_value(0), is_displayed(false) 
+: value(0), user_value(0), is_fixed(true) 
 {}
 
-Frame::Frame(int val, int user_val, bool displayed)
-: value(val), user_value(user_val), is_displayed(displayed) 
+Frame::Frame(int val, int user_val, bool fixed)
+: value(val), user_value(user_val), is_fixed(fixed) 
 {}
 
 /* Getters */
@@ -18,9 +18,9 @@ int Frame::getUserValue()
 {
     return this->user_value;
 }
-bool Frame::isDisplayed()
+bool Frame::isFixed()
 {
-    return this->is_displayed;
+    return this->is_fixed;
 }
 
 /* Setters */
@@ -34,9 +34,9 @@ Frame &Frame::setUserValue(int val)
     this->user_value = val;
     return *this;
 }
-Frame &Frame::display(bool val)
+Frame &Frame::fixed(bool val)
 {
-    this->is_displayed = val;
+    this->is_fixed = val;
     return *this;
 }
 

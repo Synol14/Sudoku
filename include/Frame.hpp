@@ -7,7 +7,7 @@ class Frame
 private:
     int value;
     int user_value;
-    bool is_displayed;
+    bool is_fixed;
 
 public:
     /* Contructors */
@@ -17,12 +17,12 @@ public:
     /* Getters */
     int getValue();
     int getUserValue();
-    bool isDisplayed();
+    bool isFixed();
 
     /* Setters */
     Frame &setValue(int val);
     Frame &setUserValue(int val);
-    Frame &display(bool val);
+    Frame &fixed(bool val);
 
     /* Methods */
     bool checkUserValue();
