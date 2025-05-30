@@ -10,11 +10,11 @@
 Board::Board() {}
 
 /* Getters */
-Frame Board::getFrame(int x, int y)
+Frame Board::getFrame(int x, int y) const
 {
     return this->frames[y][x];
 }
-int Board::getValue(int x, int y)
+int Board::getValue(int x, int y) const
 {
     return this->frames[y][x].getValue();
 }
@@ -22,7 +22,7 @@ int Board::getValue(int x, int y)
 /* Setters */
 
 /* Methods */
-std::set<int> Board::getavailableNumbersInChunk(int x, int y)
+std::set<int> Board::getavailableNumbersInChunk(int x, int y) const
 {
     int chunk_x = x / CHUNK_SIZE;
     int chunk_y = y / CHUNK_SIZE;
@@ -41,7 +41,7 @@ std::set<int> Board::getavailableNumbersInChunk(int x, int y)
     }
     return available_numbers;
 }
-std::set<int> Board::getavailableNumbersInFrame(int x, int y)
+std::set<int> Board::getavailableNumbersInFrame(int x, int y) const
 {
     std::set<int> available_numbers = getavailableNumbersInChunk(x, y);
     for (const auto &i : this->forbidden_columns[x])
@@ -68,7 +68,7 @@ void Board::getPreviousCoordinates(int &x, int &y)
         }
     }
 }
-std::string Board::toString()
+std::string Board::toString() const
 {
     std::string output = "╔═══════════╦═══════════╦═══════════╗\n";
     for (int y = 0; y < BOARD_SIZE; y++)

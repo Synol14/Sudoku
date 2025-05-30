@@ -17,6 +17,24 @@ void newRandomSeed();
 int getRandomNumber(int max);
 
 /**
+ * @brief Get randomly a value from a list
+ * 
+ * @tparam T Type of value
+ * @param list Vector of T values
+ * @return T 
+ */
+template <typename T>
+T getRandomValueFromList(std::vector<T> list);
+
+/**
+ * @brief Get randomly a number from integer list
+ * 
+ * @param list Vector of integer values
+ * @return int 
+ */
+int getRandomNumberFromList(std::vector<int> list);
+
+/**
  * @brief Sleep for X milliseconds
  *
  * @param milliseconds (IN) Sleeping duration in milliseconds

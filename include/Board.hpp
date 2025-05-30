@@ -21,8 +21,8 @@ private:
     std::vector<int> forbidden_columns[BOARD_SIZE];
 
 private:
-    std::set<int> getavailableNumbersInChunk(int x, int y);
-    std::set<int> getavailableNumbersInFrame(int x, int y);
+    std::set<int> getavailableNumbersInChunk(int x, int y) const;
+    std::set<int> getavailableNumbersInFrame(int x, int y) const;
     void getPreviousCoordinates(int &x, int &y);
 
 public:
@@ -37,7 +37,7 @@ public:
      * @param y (IN) The y coordinate of the frame
      * @return Frame
      */
-    Frame getFrame(int x, int y);
+    Frame getFrame(int x, int y) const;
     /**
      * @brief Get the value by coordinates
      *
@@ -45,13 +45,13 @@ public:
      * @param y (IN) The y coordinate of the frame
      * @return int
      */
-    int getValue(int x, int y);
+    int getValue(int x, int y) const;
     /**
      * @brief Get a board visual in a string
      * 
      * @return std::string 
      */
-    std::string toString();
+    std::string toString() const;
 
     /* Setters */
 

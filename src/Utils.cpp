@@ -22,6 +22,12 @@ int getRandomNumberFromList(std::vector<int> list)
     return list[rand() % list.size()];
 }
 
+template <typename T>
+int getRandomValueFromList(std::vector<T> list)
+{
+    return list[rand() % list.size()];
+}
+
 void sleep(int milliseconds)
 {
     std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
